@@ -19,7 +19,6 @@ is_raining=0
 mosquitto_sub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$RAIN_TOPIC" | while read -r message; do
     case "$message" in
         "RAIN_START")
-           	echo "$message"
             is_raining=1
             angle=0  # Start with angle at 0 when it begins to rain
             while [ "$is_raining" -eq 1 ]; do
@@ -36,7 +35,7 @@ mosquitto_sub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$RAIN_TOPIC"
                 sleep 1  # Wait for a second before changing the angle
 
                 # Listen for a single message which might end the rain
-                rain_message=$(mosquitto_sub -C 1 -u "$MQTT_USER" -P "$MQTT_PASS" -h "$MQTT_BROKER" -t "$RAIN_TOPIC" -W 1)
+                rain_message=$(mosquitto_sub -u "$MQTT_USER" -P "$MQTT_PASS" -h "$MQTT_BROKER" -t "$RAIN_TOPIC" -C 1)
                 if [[ "$rain_message" == "RAIN_END" ]]; then
                     is_raining=0
                 fi

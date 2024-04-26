@@ -10,7 +10,7 @@ MQTT_PASS="123"
 
 # Function to publish message to MQTT with authentication
 publish_mqtt() {
-  mosquitto_pub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$MQTT_TOPIC" -m "$1"
+  mosquitto_pub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$MQTT_TOPIC" -m "$1" -r
 }
 
 # Initialize previous rain detection state
