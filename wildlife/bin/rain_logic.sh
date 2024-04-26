@@ -4,17 +4,19 @@
 MQTT_BROKER="localhost"
 RAIN_TOPIC="weather/rain_status"
 WIPER_ANGLE_TOPIC="weather/wiper_angle"
+MQTT_USER="ESP"
+MQTT_PASS="123"
 
-# Function to publish angle to MQTT
+# Function to publish angle to MQTT with authentication
 publish_angle() {
-    mosquitto_pub -h "$MQTT_BROKER" -t "$WIPER_ANGLE_TOPIC" -m "{\"wiper_angle\": $1}"
+    mosquitto_pub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$WIPER_ANGLE_TOPIC" -m "{\"wiper_angle\": $1}"
 }
 
 # Initial rain status is assumed not raining
 is_raining=0
 
-# Subscribe to rain status MQTT topic and handle messages
-mosquitto_sub -h "$MQTT_BROKER" -t "$RAIN_TOPIC" | while read -r message; do
+# Subscribe to rain status MQTT topic and handle messages with authentication
+mosquitto_sub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$RAIN_TOPIC" | while read -r message; do
     case "$message" in
         "RAIN_START")
             is_raining=1
@@ -33,7 +35,7 @@ mosquitto_sub -h "$MQTT_BROKER" -t "$RAIN_TOPIC" | while read -r message; do
                 sleep 1  # Wait for a second before changing the angle
 
                 # Listen for a single message which might end the rain
-                rain_message=$(mosquitto_sub -C 1 -h "$MQTT_BROKER" -t "$RAIN_TOPIC" -W 1)
+                rain_message=$(mosquitto_sub -C 1 -u "$MQTT_USER" -P "$MQTT_PASS" -h "$MQTT_BROKER" -t "$RAIN_TOPIC" -W 1)
                 if [[ "$rain_message" == "RAIN_END" ]]; then
                     is_raining=0
                 fi
