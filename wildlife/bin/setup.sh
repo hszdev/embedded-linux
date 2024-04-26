@@ -4,14 +4,14 @@
 setup_cronjobs() {
     local repo_dir="$1"
     ./cronjob_ctl.sh add "$repo_dir/wildlife/bin/take_photo.sh Time $repo_dir/wildlife/photos" '*/5 * * * *'
-    ./cronjob_ctl.sh add "$repo_dir/wildlife/bin/motion_detection.sh $repo_dir/wildlife/photos 120" '*/2 * * * *'
+    ./cronjob_ctl.sh add "$repo_dir/wildlife/bin/motion_detection.sh $repo_dir/wildlife/photos" '@reboot'
 }
 
 # Function to remove cron jobs
 remove_cronjobs() {
     local repo_dir="$1"
     ./cronjob_ctl.sh remove "$repo_dir/wildlife/bin/take_photo.sh Time $repo_dir/wildlife/photos" '*/5 * * * *'
-    ./cronjob_ctl.sh remove "$repo_dir/wildlife/bin/motion_detection.sh $repo_dir/wildlife/photos 120" '*/2 * * * *'
+    ./cronjob_ctl.sh remove "$repo_dir/wildlife/bin/motion_detection.sh $repo_dir/wildlife/photos" '@reboot'
 }
 
 # Main function
