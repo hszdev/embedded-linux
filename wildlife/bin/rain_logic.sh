@@ -2,7 +2,7 @@
 
 # MQTT Broker and Topic Settings
 MQTT_BROKER="localhost"
-RAIN_TOPIC="esp/weather/rain_status"
+RAIN_TOPIC="weather/rain_status"
 WIPER_ANGLE_TOPIC="weather/wiper_angle"
 MQTT_USER="esp"
 MQTT_PASS="123"
