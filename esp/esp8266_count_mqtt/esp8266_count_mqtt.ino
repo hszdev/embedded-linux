@@ -6,13 +6,13 @@
 // 2022-03-24, Kjeld Jensen, First version
 
 // Configuration
-#define WIFI_SSID       "ESP Friendly"
-#define WIFI_PASSWORD   "alleskaldoe"
+#define WIFI_SSID       "WLC-001-G09"
+#define WIFI_PASSWORD   "emliemli"
 
-#define MQTT_SERVER      "192.168.1.248"
+#define MQTT_SERVER      "192.168.10.1"
 #define MQTT_SERVERPORT  1883 
-#define MQTT_USERNAME    ""
-#define MQTT_KEY         ""
+#define MQTT_USERNAME    "esp"
+#define MQTT_KEY         "123"
 #define MQTT_TOPIC       "/feeds/count"  
 
 // wifi
@@ -143,6 +143,7 @@ void publish_data()
 void loop()
 {   
     if (digitalRead(BTN_PIN) == LOW) {
+      Serial.println("Button pressed");
       publish_data();
       delay(50);
     }
