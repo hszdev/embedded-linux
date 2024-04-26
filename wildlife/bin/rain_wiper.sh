@@ -5,7 +5,7 @@ SERIAL_PORT="/dev/ttyACM0"
 BAUD_RATE="115200"
 MQTT_BROKER="localhost"
 MQTT_TOPIC="weather/wiper_angle"
-MQTT_USER="ESP"
+MQTT_USER="esp"
 MQTT_PASS="123"
 
 # Initialize serial communication with specified baud rate

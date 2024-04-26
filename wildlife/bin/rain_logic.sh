@@ -2,9 +2,9 @@
 
 # MQTT Broker and Topic Settings
 MQTT_BROKER="localhost"
-RAIN_TOPIC="weather/rain_status"
+RAIN_TOPIC="esp/weather/rain_status"
 WIPER_ANGLE_TOPIC="weather/wiper_angle"
-MQTT_USER="ESP"
+MQTT_USER="esp"
 MQTT_PASS="123"
 
 # Function to publish angle to MQTT with authentication
@@ -19,6 +19,7 @@ is_raining=0
 mosquitto_sub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$RAIN_TOPIC" | while read -r message; do
     case "$message" in
         "RAIN_START")
+           	echo "$message"
             is_raining=1
             angle=0  # Start with angle at 0 when it begins to rain
             while [ "$is_raining" -eq 1 ]; do
