@@ -37,8 +37,8 @@ usage() {
     echo "  amount_of_photos (optional): Number of photos to capture (default: 60)"
     echo "  photo_cooldown (optional): Cooldown between each photo capture in seconds (default: 1)"
     echo "  working_directory (optional): Directory to save temporary photos (default: /tmp/wildlife-motion-photos)"
-    echo "  take_photo_script (optional): Location of the take_photo.sh script (default: /home/emli/wildlife/bin/take_photo.sh)"
-    echo "  motion_detect_script (optional): Location of the motion detection Python script (default: /home/emli/wildlife/motion_detect.py)"
+    echo "  take_photo_script (optional): Location of the take_photo.sh script (default: /home/emli/embedded-linux/wildlife/bin/take_photo.sh)"
+    echo "  motion_detect_script (optional): Location of the motion detection Python script (default: /home/emli/embedded-linux/wildlife/bin/motion_detect.py)"
 }
 
 # Function for validating input
@@ -76,8 +76,8 @@ main() {
     local amount_of_photos="${2:-60}"
     local photo_cooldown="${3:-1}"
     local working_directory="${4:-/tmp/wildlife-motion-photos}"
-    local take_photo_script_location="${5:-/home/emli/wildlife/bin/take_photo.sh}"
-    local motion_detection_script_location="${5:-/home/emli/wildlife/motion_detect.py}"
+    local take_photo_script_location="${5:-/home/emli/embedded-linux/wildlife/bin/take_photo.sh}"
+    local motion_detection_script_location="${6:-/home/emli/embedded-linux/wildlife/bin/motion_detect.py}"
 
     # Validate input
     validate_input "$@"

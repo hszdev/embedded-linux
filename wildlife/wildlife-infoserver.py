@@ -6,7 +6,7 @@ import random
 app = Flask(__name__)
 
 
-IMAGE_FOLDER = '/home/emli/wildlife/photos'
+IMAGE_FOLDER = '/home/emli/embedded-linux/wildlife/photos'
 HOST = '0.0.0.0'
 PORT = 8099
 
