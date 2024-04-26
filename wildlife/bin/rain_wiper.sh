@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Serial port and MQTT broker details
-SERIAL_PORT="/dev/ttyUSB0"
+SERIAL_PORT="/dev/ttyACM0"
 BAUD_RATE="115200"
 MQTT_BROKER="localhost"
 MQTT_TOPIC="weather/wiper_angle"
