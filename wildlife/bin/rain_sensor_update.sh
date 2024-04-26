@@ -5,10 +5,12 @@ SERIAL_PORT="/dev/ttyACM0"
 BAUD_RATE="115200"
 MQTT_BROKER="localhost"
 MQTT_TOPIC="weather/rain_status"
+MQTT_USER="ESP"
+MQTT_PASS="123"
 
-# Function to publish message to MQTT
+# Function to publish message to MQTT with authentication
 publish_mqtt() {
-  mosquitto_pub -h "$MQTT_BROKER" -t "$MQTT_TOPIC" -m "$1"
+  mosquitto_pub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$MQTT_TOPIC" -m "$1"
 }
 
 # Initialize serial communication with specified baud rate
@@ -31,4 +33,3 @@ while read -r line; do
     previous_rain_detect=0
   fi
 done <"$SERIAL_PORT"
-
