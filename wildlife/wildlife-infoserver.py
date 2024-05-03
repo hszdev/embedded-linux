@@ -2,14 +2,10 @@ from flask import Flask, render_template_string, send_from_directory
 import os
 import json
 import random
+import argparse
 
 app = Flask(__name__)
-
-
 IMAGE_FOLDER = '/home/emli/embedded-linux/wildlife/photos'
-HOST = '0.0.0.0'
-PORT = 8099
-
 
 
 template = """
@@ -276,4 +272,12 @@ def serve_metadata(json_file):
 
 
 if __name__ == '__main__':
-    app.run(host=HOST, port=PORT, debug=True)
+  parser = argparse.ArgumentParser(description='Run the wildlife web frontend')
+  parser.add_argument('--folder', type=str, default='/home/emli/embedded-linux/wildlife/photos', help='Path to the image folder')
+  parser.add_argument('--host', type=str, default='0.0.0.0', help='Host address to bind the application')
+  parser.add_argument('--port', type=int, default=8099, help='Port number to listen on')
+  parser.add_argument('--debug', action='store_true', default=True, help='Enable debug mode')
+  args = parser.parse_args()
+ 
+  IMAGE_FOLDER = args.folder
+  app.run(host=args.host, port=args.port, debug=args.debug)

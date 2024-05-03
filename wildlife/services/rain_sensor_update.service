@@ -1,0 +1,16 @@
+[Unit]
+Description=Rain Sensor Updater (camera wiper)
+After=multi-user.target
+
+[Service]
+Type=simple
+User=emli
+WorkingDirectory=/home/emli/embedded-linux/wildlife
+ExecStart=/home/emli/embedded-linux/wildlife/bin/rain_sensor_update.sh
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=rain_sensor_update
+
+[Install]
+WantedBy=multi-user.target

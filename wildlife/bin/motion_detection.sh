@@ -25,7 +25,7 @@ save_motion_photo() {
 		
         mkdir -p "$destination_dir/$folder_name"
 
-        jq '.Trigger = "Motion"' "$json_file" >"$destination_dir/$folder_name/$json_filename"
+        cp "$json_file" "$destination_dir/$folder_name/$json_filename"
         cp "$image_path" "$destination_dir/$folder_name/$filename"
     fi
 }
@@ -88,7 +88,7 @@ main() {
     # Main loop for capturing photos
     local old_photo=""
     while true; do
-        local new_photo=$("$take_photo_script_location" Time "$working_directory")
+        local new_photo=$("$take_photo_script_location" Motion "$working_directory")
 
         # If old photo is not empty, do motion detection
         if [ -n "$old_photo" ]; then
@@ -112,3 +112,4 @@ main() {
 }
 
 # Run main script
+main "$@"

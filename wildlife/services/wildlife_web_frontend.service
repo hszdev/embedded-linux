@@ -1,0 +1,16 @@
+[Unit]
+Description=Wildlife Camera Web Frontend
+After=multi-user.target
+
+[Service]
+Type=simple
+User=emli
+WorkingDirectory=/home/emli/embedded-linux/wildlife
+ExecStart=/home/emli/embedded-linux/wildlife/bin/run_web_frontend.sh /home/emli/embedded-linux/wildlife wildlife-infoserver.py /home/emli/embedded-linux/wildlife/photos 0.0.0.0 8099 
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=wildlife_web_frontend
+
+[Install]
+WantedBy=multi-user.target

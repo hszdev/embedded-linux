@@ -1,0 +1,16 @@
+[Unit]
+Description=Rain Logic Service (camera wiper)
+After=multi-user.target
+
+[Service]
+Type=simple
+User=emli
+WorkingDirectory=/home/emli/embedded-linux/wildlife
+ExecStart=/home/emli/embedded-linux/wildlife/bin/rain_logic.sh
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=rain_logic
+
+[Install]
+WantedBy=multi-user.target
