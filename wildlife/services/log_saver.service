@@ -1,0 +1,16 @@
+[Unit]
+Description=MQTT Log Saver
+After=multi-user.target
+
+[Service]
+Type=simple
+User=emli
+WorkingDirectory=/home/emli/embedded-linux/wildlife
+ExecStart=/home/emli/embedded-linux/wildlife/bin/log_saver.sh 
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=log_saver
+
+[Install]
+WantedBy=multi-user.target
