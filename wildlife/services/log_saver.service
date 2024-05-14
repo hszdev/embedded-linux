@@ -8,8 +8,6 @@ User=emli
 WorkingDirectory=/home/emli/embedded-linux/wildlife
 ExecStart=/home/emli/embedded-linux/wildlife/bin/log_saver.sh 
 Restart=always
-StandardOutput=syslog
-StandardError=syslog
 SyslogIdentifier=log_saver
 
 [Install]

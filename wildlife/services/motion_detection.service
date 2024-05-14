@@ -8,8 +8,6 @@ User=emli
 WorkingDirectory=/home/emli/embedded-linux/wildlife
 ExecStart=/home/emli/embedded-linux/wildlife/bin/motion_detection.sh /home/emli/embedded-linux/wildlife
 Restart=always
-StandardOutput=syslog
-StandardError=syslog
 SyslogIdentifier=motion_detection
 
 [Install]

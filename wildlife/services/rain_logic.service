@@ -8,8 +8,6 @@ User=emli
 WorkingDirectory=/home/emli/embedded-linux/wildlife
 ExecStart=/home/emli/embedded-linux/wildlife/bin/rain_logic.sh
 Restart=always
-StandardOutput=syslog
-StandardError=syslog
 SyslogIdentifier=rain_logic
 
 [Install]

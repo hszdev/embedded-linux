@@ -27,7 +27,7 @@ mosquitto_sub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$RAIN_TOPIC"
 
                 # Alternate angle
                 if [ "$angle" -eq 0 ]; then
-                    angle=180
+                    angle=90
                 else
                     angle=0
                 fi
