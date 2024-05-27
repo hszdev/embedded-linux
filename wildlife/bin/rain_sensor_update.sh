@@ -38,11 +38,13 @@ previous_rain_detect=0
 while true; do
   sleep 1 
   line=$(cat /dev/ttyACM0 | head -n 1)
+  echo "Reading $line"
 
   # Parse JSON and extract 'rain_detect' value
   rain_detect=$(echo "$line" | jq -r '.rain_detect // empty')
   
   # Check for state change from not raining to raining
+  echo "Changing state"
   if [[ "$rain_detect" == "1" && "$previous_rain_detect" == "0" ]]; then
     publish_mqtt "RAIN_START"
     previous_rain_detect=1
@@ -50,5 +52,6 @@ while true; do
     publish_mqtt "RAIN_END"
     previous_rain_detect=0
   fi
+   echo "Writing latest message"
   write_latest_message
 done

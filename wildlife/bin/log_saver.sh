@@ -8,7 +8,6 @@ process_message() {
   local time_now=$(date +"%Y-%m-%d %H:%M:%S.%N")
   local filename="${save_dir}/${time_now}.json"
 
-  # Check if file already exists (collision)
   if [ -f "$filename" ]; then
     static counter=0  
     local new_filename="${filename%.*}_${counter}.json"
@@ -19,7 +18,6 @@ process_message() {
     filename="$new_filename"
   fi
 
-  # Save message to JSON file
   echo "$message" > "$filename"
   echo "Saved message to: $filename"
 }
@@ -42,7 +40,6 @@ validate_input(){
 }
 
 
-# Main function to listen and process messages
 main() {
     local mqtt_broker="$1"
     local mqtt_user="$2"
@@ -54,7 +51,6 @@ main() {
   
 
 
-  # Subscribe to MQTT topic using mosquitto_sub
   mosquitto_sub -v -t "$mqtt_topic" -h "$mqtt_broker" -u "$mqtt_user" -P "$mqtt_pass" | while read -r message; do
     process_message "$message" "$save_dir"
   done

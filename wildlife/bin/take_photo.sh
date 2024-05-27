@@ -8,7 +8,7 @@ capture_photo() {
     local filename="$folder/$timestamp.jpg"
 
     mkdir -p "$working_directory/$folder"
-    rpicam-still -t 0.1 -o "$working_directory/$filename"
+    rpicam-still -t 1 -o "$working_directory/$filename"
 
     echo "$filename"
 }

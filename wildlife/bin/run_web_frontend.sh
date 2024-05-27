@@ -62,5 +62,5 @@ full_requirements_file="$working_dir/$requirements_file"
 create_venv "$full_venv_dir"
 verify_dependencies "$full_requirements_file"
 
-python3 "$script_name" "--folder $image_folder" "--host $host" "--port $port" "--debug False"
+python3 "$script_name" "--folder" "$image_folder" "--host" "$host" "--port" "$port" "--debug"
 

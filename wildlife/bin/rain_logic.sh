@@ -14,6 +14,7 @@ publish_angle() {
 
 # Initial rain status is assumed not raining
 is_raining=0
+publish_angle 0
 
 # Subscribe to rain status MQTT topic and handle messages with authentication
 mosquitto_sub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$RAIN_TOPIC" | while read -r message; do

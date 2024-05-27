@@ -6,7 +6,7 @@ After=multi-user.target
 Type=simple
 User=emli
 WorkingDirectory=/home/emli/embedded-linux/wildlife
-ExecStart=/home/emli/embedded-linux/wildlife/bin/motion_detection.sh /home/emli/embedded-linux/wildlife
+ExecStart=/home/emli/embedded-linux/wildlife/bin/motion_detection.sh /home/emli/embedded-linux/wildlife/photos
 Restart=always
 SyslogIdentifier=motion_detection
 
