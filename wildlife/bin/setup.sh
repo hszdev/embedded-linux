@@ -4,14 +4,22 @@
 setup_cronjobs() {
     local repo_dir="$1"
     ./cronjob_ctl.sh add "$repo_dir/wildlife/bin/take_photo.sh Time $repo_dir/wildlife/photos" '*/5 * * * *'
-    ./cronjob_ctl.sh add "$repo_dir/wildlife/bin/motion_detection.sh $repo_dir/wildlife/photos" '@reboot'
+}
+
+setup_services() {
+    local repo_dir="$1"
+    ./systemd_service_ctl.sh create "$repo_dir/wildlife/services"
 }
 
 # Function to remove cron jobs
 remove_cronjobs() {
     local repo_dir="$1"
     ./cronjob_ctl.sh remove "$repo_dir/wildlife/bin/take_photo.sh Time $repo_dir/wildlife/photos" '*/5 * * * *'
-    ./cronjob_ctl.sh remove "$repo_dir/wildlife/bin/motion_detection.sh $repo_dir/wildlife/photos" '@reboot'
+}
+
+remove_services() {
+    local repo_dir="$1"
+    ./systemd_service_ctl.sh delete "$repo_dir/wildlife/services"
 }
 
 # Main function
@@ -22,9 +30,11 @@ main() {
     case "$action" in
         up)
             setup_cronjobs "$repo_dir"
+            setup_services "$repo_dir"
             ;;
         down)
             remove_cronjobs "$repo_dir"
+            remove_services "$repo_dir"
             ;;
         *)
             echo "Invalid action. Please specify 'up' or 'down'"
