@@ -30,51 +30,32 @@ filter_waiting_files() {
 }
 
 update_original_json() {
-  local filtered_json="$1"
+  local file_info="$1"
   local dir="$2"
 
-  jq -c '.[]' <<< "$filtered_json" | while read -r file_info; do
     # Extract id and Drone Copy attributes
-    id=$(jq -c -r '.id' <<< "$file_info")
-    echo "updating $id"
-    drone_copy=$(jq -c -r '.["Drone Copy"]' <<< "$file_info")
+  id=$(jq -c -r '.id' <<< "$file_info")
+  echo "updating $id"
+  drone_copy=$(jq -c -r '.["Drone Copy"]' <<< "$file_info")
 
-    # Update original JSON file with Drone Copy attribute
-    original_json_file="$dir/$id.json"
-    jq -c --arg drone_copy "$drone_copy" '. += { "Drone Copy": $drone_copy }' "$original_json_file" > "$original_json_file.tmp" && mv "$original_json_file.tmp" "$original_json_file"
-  done
+  # Update original JSON file with Drone Copy attribute
+  echo "Before $(cat $dir/$id.json)"
+  original_json_file="$dir/$id.json"
+  jq -c --arg drone_copy "$drone_copy" '. += { "Drone Copy": $drone_copy }' "$original_json_file" > "$original_json_file.tmp" && mv "$original_json_file.tmp" "$original_json_file" 
+  echo "After $(cat $dir/$id.json)"
+
 }
 
 
 main() {
   local dir="$1"
-  local waiting_files=$(check_json_files "$dir")	
-  
-  update_waiting_files() {
-    while true; do
-      sleep 2
-      local waiting_files_now=$(check_json_files "$dir")
-      
-      # Print count of old and new files
-      echo "Old files: $(jq -c -n --argjson waiting_files "$waiting_files" '$waiting_files | length')"
-      echo "New files: $(jq -c -n --argjson waiting_files "$waiting_files_now" '$waiting_files | length')"
-
-      # Update waiting_files if there are new files
-      if [ "$waiting_files" != "$waiting_files_now" ]; then
-        waiting_files="$waiting_files_now"
-      fi
-
-      publish_mqtt "$waiting_files"
-    done
-  }
-  update_waiting_files &
-
+  echo "Listenining"
   mosquitto_sub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$DOWNLOADED_TOPIC"  | while read -r message; do
     if [ -z "$message" ]; then
       echo "No more unread messages on MQTT topic: $topic"
     else
-	  filtered_json=$(filter_waiting_files "$message" "$waiting_files")
-	  update_original_json "$filtered_json" "$dir"
+      echo "Got a message: $message"
+	  update_original_json "$message" "$dir"
     fi
   done	
 }
