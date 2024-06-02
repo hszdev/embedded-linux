@@ -256,6 +256,7 @@ def get_images_and_metadata():
                         print(f"Error loading JSON file: {e}")
     return image_json_data
 
+
     
 @app.route('/')
 def index():
@@ -264,6 +265,13 @@ def index():
     sorted_pairs = sorted(image_json_pairs, key=lambda x: x[1]["Create Seconds Epoch"], reverse=True)
     logs = generate_sample_logs()
     return render_template_string(template, image_json_pairs=sorted_pairs, logs=logs)
+
+@app.route('/waiting')
+def waiting():
+    image_json_pairs = get_images_and_metadata()
+    waiting_pairs = [(image, json_file) for image, json_file in image_json_pairs if "Drone Copy" not in json_file]
+    waiting_image_ids = [image for image, _ in waiting_pairs]
+    return waiting_image_ids
 
 @app.route('/images/<path:image>')
 def serve_image(image):
