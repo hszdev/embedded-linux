@@ -1,0 +1,10 @@
+[Unit]
+Description=Wifi-logger
+After=network-online.target
+
+[Service]
+ExecStart=/home/henriko/bin/wifi-logger.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
