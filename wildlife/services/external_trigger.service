@@ -1,0 +1,14 @@
+[Unit]
+Description=Drone Image Transfer
+After=multi-user.target
+
+[Service]
+Type=simple
+User=emli
+WorkingDirectory=/home/emli/embedded-linux/wildlife
+ExecStart=/home/emli/embedded-linux/wildlife/bin/mqtt_listener.sh -h localhost -p 1883 -u esp -P 123 -t /feeds/count
+Restart=always
+SyslogIdentifier=image_transfer
+
+[Install]
+WantedBy=multi-user.target
