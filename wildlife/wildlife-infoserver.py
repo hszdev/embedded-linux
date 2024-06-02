@@ -271,6 +271,7 @@ def waiting():
     image_json_pairs = get_images_and_metadata()
     waiting_pairs = [(image, json_file) for image, json_file in image_json_pairs if "Drone Copy" not in json_file]
     waiting_image_ids = [image for image, _ in waiting_pairs]
+    waiting_image_ids = [image.split('.')[0] for image in waiting_image_ids]
     return waiting_image_ids
 
 @app.route('/images/<path:image>')

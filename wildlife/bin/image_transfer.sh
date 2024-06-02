@@ -53,8 +53,17 @@ main() {
   update_waiting_files() {
     while true; do
       sleep 2
-      waiting_files=$(check_json_files "$dir")
-      local converted=$(convert_waiting_files "$waiting_files")
+      local waiting_files_now=$(check_json_files "$dir")
+      
+      # Print count of old and new files
+      echo "Old files: $(jq -c -n --argjson waiting_files "$waiting_files" '$waiting_files | length')"
+      echo "New files: $(jq -c -n --argjson waiting_files "$waiting_files_now" '$waiting_files | length')"
+
+      # Update waiting_files if there are new files
+      if [ "$waiting_files" != "$waiting_files_now" ]; then
+        waiting_files="$waiting_files_now"
+      fi
+
       publish_mqtt "$waiting_files"
     done
   }
@@ -64,8 +73,8 @@ main() {
     if [ -z "$message" ]; then
       echo "No more unread messages on MQTT topic: $topic"
     else
-	filtered_json=$(filter_waiting_files "$message" "$waiting_files")
-	update_original_json "$filtered_json" "$dir"
+	  filtered_json=$(filter_waiting_files "$message" "$waiting_files")
+	  update_original_json "$filtered_json" "$dir"
     fi
   done	
 }
