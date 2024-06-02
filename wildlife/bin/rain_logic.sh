@@ -38,7 +38,7 @@ mosquitto_sub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$RAIN_TOPIC"
                 # Listen for a single message which might end the rain
                 rain_message=$(mosquitto_sub -u "$MQTT_USER" -P "$MQTT_PASS" -h "$MQTT_BROKER" -t "$RAIN_TOPIC" -C 1)
                 if [[ "$rain_message" == "RAIN_END" ]]; then
-                    /home/emli/embedded-linux/wildlife/bin/save_log.sh "Rain ended at $(date)"
+                    /home/emli/embedded-linux/wildlife/bin/save_log.sh "/home/emli/embedded-linux/wildlife/bin/logs" "Rain ended at $(date)"
                     is_raining=0
                 fi
             done
