@@ -247,6 +247,7 @@ def get_logs_from_logs_dir():
     logs = []
     files = os.listdir(LOGS_FOLDER)
     files.sort(key=lambda x: os.path.getctime(os.path.join(LOGS_FOLDER, x)))
+    files = files[::-1]
 
     for file in files:
         with open(os.path.join(LOGS_FOLDER, file), 'r') as f:
