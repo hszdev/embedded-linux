@@ -16,15 +16,16 @@ publish_mqtt() {
 
 write_latest_message() {
   # Subscribe to MQTT topic and read the latest message
-  message=$(mosquitto_sub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$WIPER_ANGLE_TOPIC" -C 1)
-
+  sleep 2
+  message=$(timeout 5 mosquitto_sub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$WIPER_ANGLE_TOPIC" -C 1)
+	
   # Extract the wiper angle from the message
   angle=$(echo "$message" | jq -r '.wiper_angle')
   echo "message $message"
 
   # Validate the angle and send to serial port
   if [[ "$angle" =~ ^[0-9]+$ ]] && [ "$angle" -ge 0 ] && [ "$angle" -le 90 ]; then
-    echo "{\"wiper_angle\": $angle}" > "$SERIAL_PORT"
+		echo "{\"wiper_angle\": $angle}" > "$SERIAL_PORT"
   else
     echo "Received invalid angle: $angle"
   fi
@@ -36,8 +37,8 @@ previous_rain_detect=0
 
 # Continuously read from serial port
 while true; do
-  sleep 1 
-  line=$(cat /dev/ttyACM0 | head -n 1)
+  sleep 2
+  read line < /dev/ttyACM0
   echo "Reading $line"
 
   # Parse JSON and extract 'rain_detect' value
@@ -52,6 +53,7 @@ while true; do
     publish_mqtt "RAIN_END"
     previous_rain_detect=0
   fi
-   echo "Writing latest message"
+  echo "Writing latest message"
+  #sleep 1
   write_latest_message
 done

@@ -6,7 +6,7 @@ After=multi-user.target
 Type=simple
 User=emli
 WorkingDirectory=/home/emli/embedded-linux/wildlife
-ExecStart=/home/emli/embedded-linux/wildlife/bin/mqtt_listener.sh -h localhost -p 1883 -u esp -P 123 -t /feeds/count
+ExecStart=/home/emli/embedded-linux/wildlife/bin/external_listener.sh -h localhost -p 1883 -u esp -P 123 -t feeds/count
 Restart=always
 SyslogIdentifier=image_transfer
 
