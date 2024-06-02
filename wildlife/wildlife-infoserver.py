@@ -213,8 +213,18 @@ template = """
 
             var metadataHTML = '<h2>Metadata</h2><div class="metadata-container">';
             for (var key in metadata) {
-                metadataHTML += '<div class="metadata-item"><strong>' + key + ':</strong> ' + metadata[key] + '</div>';
+                if (typeof metadata[key] === 'object') {
+                    metadataHTML += '<div class="metadata-item"><strong>' + key + ':</strong>';
+                    for (var nestedKey in metadata[key]) {
+                        metadataHTML += '<div class="metadata-item"><strong>' + nestedKey + ':</strong> ' + metadata[key][nestedKey] + '</div>';
+                    }
+                    metadataHTML += '</div>';
+                }
+                else {
+                    metadataHTML += '<div class="metadata-item"><strong>' + key + ':</strong> ' + metadata[key] + '</div>';
+                }
             }
+            
             metadataHTML += '</div>';
             modalMetadata.innerHTML = metadataHTML;
         }
