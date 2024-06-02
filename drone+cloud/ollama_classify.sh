@@ -1,4 +1,3 @@
-#!/bin/bash
 
 # Check if the image path is provided as a parameter
 if [ $# -eq 0 ]; then
@@ -23,7 +22,7 @@ fi
 
 # Get the image annotation
 image_annotation=$(ollama run llava:7b "list the animals in the image $image_path")
-
+echo "$image_annotation"
 # Append the image annotation to the sidecar file in JSON format by removing the last '}' character and adding the annotation
 sed -i '$ s/.$//' $sidecar_path
 echo ",\"annotation\":\"$image_annotation\"}" >> $sidecar_path

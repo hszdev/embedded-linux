@@ -25,11 +25,13 @@ mosquitto_sub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$RAIN_TOPIC"
             while [ "$is_raining" -eq 1 ]; do
                 # Publish current angle
                 publish_angle "$angle"
-
+                echo "Angle published: $angle"
                 # Alternate angle
                 if [ "$angle" -eq 0 ]; then
+                    echo "Angle was 0 now 90"
                     angle=90
                 else
+                    echo "Angle was 90 now 0"
                     angle=0
                 fi
 
@@ -38,15 +40,18 @@ mosquitto_sub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$RAIN_TOPIC"
                 # Listen for a single message which might end the rain
                 rain_message=$(mosquitto_sub -u "$MQTT_USER" -P "$MQTT_PASS" -h "$MQTT_BROKER" -t "$RAIN_TOPIC" -C 1)
                 if [[ "$rain_message" == "RAIN_END" ]]; then
+                    echo "Rain ended message received"
                     /home/emli/embedded-linux/wildlife/bin/save_log.sh "/home/emli/embedded-linux/wildlife/logs" "Rain ended at $(date)"
                     is_raining=0
                 fi
+                echo "Is raining: $is_raining"
             done
             ;;
         "RAIN_END")
             is_raining=0
             # Reset the wiper angle to 0 when rain ends
             publish_angle "0"
+            echo "Rain ended"
             ;;
     esac
 done
