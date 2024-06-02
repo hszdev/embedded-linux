@@ -41,7 +41,7 @@ update_original_json() {
   # Update original JSON file with Drone Copy attribute
   echo "Before $(cat $dir/$id.json)"
   original_json_file="$dir/$id.json"
-  jq -c --arg drone_copy "$drone_copy" '. += { "Drone Copy": $drone_copy }' "$original_json_file" > "$original_json_file.tmp" && mv "$original_json_file.tmp" "$original_json_file" 
+  jq -c --argjson drone_copy "$drone_copy" '. += { "Drone Copy": $drone_copy }' "$original_json_file" > "$original_json_file.tmp" && mv "$original_json_file.tmp" "$original_json_file" 
   echo "After $(cat $dir/$id.json)"
 
 }
