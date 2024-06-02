@@ -248,9 +248,12 @@ def get_images_and_metadata():
                 image_path = os.path.relpath(os.path.join(root, file), IMAGE_FOLDER)
                 json_path = os.path.splitext(image_path)[0] + ".json"
                 if os.path.exists(os.path.join(IMAGE_FOLDER, json_path)):
-                    with open(os.path.join(IMAGE_FOLDER, json_path), 'r') as f:
-                        json_data = json.load(f)
-                    image_json_data.append((image_path, json_data))
+                    try:
+                        with open(os.path.join(IMAGE_FOLDER, json_path), 'r') as f:
+                            json_data = json.load(f)
+                        image_json_data.append((image_path, json_data))
+                    except Exception as e:
+                        print(f"Error loading JSON file: {e}")
     return image_json_data
 
     
