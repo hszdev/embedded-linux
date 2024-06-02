@@ -6,7 +6,7 @@ import argparse
 
 app = Flask(__name__)
 IMAGE_FOLDER = '/home/emli/embedded-linux/wildlife/photos'
-
+LOGS_FOLDER = '/home/emli/embedded-linux/wildlife/logs'
 
 template = """
 <!DOCTYPE html>
@@ -242,11 +242,17 @@ template = """
 """
 
 
-def generate_sample_logs():
+
+def get_logs_from_logs_dir():
     logs = []
-    for _ in range(2000):  # Generate 20 sample logs
-        log = f"Log entry {random.randint(1, 100)}"
-        logs.append(log)
+    files = os.listdir(LOGS_FOLDER)
+    files.sort(key=lambda x: os.path.getctime(os.path.join(LOGS_FOLDER, x)))
+
+    for file in files:
+        with open(os.path.join(LOGS_FOLDER, file), 'r') as f:
+            log = f.read()
+            logs.append(log)
+    
     return logs
 
 
@@ -273,7 +279,7 @@ def index():
     image_json_pairs = get_images_and_metadata()
     print(image_json_pairs)
     sorted_pairs = sorted(image_json_pairs, key=lambda x: x[1]["Create Seconds Epoch"], reverse=True)
-    logs = generate_sample_logs()
+    logs = get_logs_from_logs_dir()
     return render_template_string(template, image_json_pairs=sorted_pairs, logs=logs)
 
 @app.route('/waiting')

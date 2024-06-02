@@ -29,10 +29,12 @@ main() {
 
     case "$action" in
         up)
+            "$repo_dir/wildlife/bin/save_log.sh" "Setting up wildlife project"
             setup_cronjobs "$repo_dir"
             setup_services "$repo_dir"
             ;;
         down)
+            "$repo_dir/wildlife/bin/save_log.sh" "Removing wildlife project"
             remove_cronjobs "$repo_dir"
             remove_services "$repo_dir"
             ;;
