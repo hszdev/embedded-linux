@@ -75,7 +75,7 @@ validate_input() {
 main() {
     local destination_directory="$1"
     local amount_of_photos="${2:--1}" # Default to -1 for indefinite
-    local photo_cooldown="${3:-30}"
+    local photo_cooldown="${3:-2}"
     local working_directory="${4:-/tmp/wildlife-motion-photos}"
     local take_photo_script_location="${5:-/home/emli/embedded-linux/wildlife/bin/take_photo.sh}"
     local motion_detection_script_location="${6:-/home/emli/embedded-linux/wildlife/motion_detect.py}"
