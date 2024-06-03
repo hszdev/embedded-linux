@@ -21,11 +21,14 @@ if [ -z "$mqtt_host" ] || [ -z "$mqtt_port" ] || [ -z "$username" ] || [ -z "$pa
 fi
 
 while true; do
+	echo "Listening to messages"
     mosquitto_sub -h "$mqtt_host" -p "$mqtt_port" -u "$username" -P "$password" -t "$topic" -F "%t %p" | \
     while read -r payload; do
+    	echo "Read payload"
         echo $(/home/emli/embedded-linux/wildlife/bin/take_photo.sh External "/home/emli/embedded-linux/wildlife/photos")
         echo "Extracted property: $p for $topic"
     done
+    echo "Sleeping for 10"
     sleep 10
 done
 

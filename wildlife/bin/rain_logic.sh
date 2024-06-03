@@ -20,10 +20,10 @@ publish_angle "0"
 mosquitto_sub -h "$MQTT_BROKER" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$RAIN_TOPIC" | while read -r message; do
 
     # if null message, continue
-    if [ -z "$message" ]; then
-        publish_angle "0"
-    fi
-
+    #if [ -z "$message" ]; then
+    #    continue
+    #fi
+	echo "Case begin"
     case "$message" in
         "RAIN_START")
             is_raining=1
