@@ -47,7 +47,7 @@ main() {
             echo "Target dir: $target_dir"
 
             image_file="${file%.*}.jpg"
-            classify_script "$image_file"
+            $classify_script "$image_file"
             mkdir -p "$target_dir"
             cp "$file" "$target_dir"
             rm "$image_file"

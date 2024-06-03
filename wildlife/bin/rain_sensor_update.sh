@@ -54,6 +54,5 @@ while true; do
     previous_rain_detect=0
   fi
   echo "Writing latest message"
-  #sleep 1
   write_latest_message
 done
